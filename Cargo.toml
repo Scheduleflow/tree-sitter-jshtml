@@ -1,17 +1,18 @@
 [package]
-name = "tree-sitter-html"
+name = "tree-sitter-jshtml"
 description = "HTML grammar for tree-sitter"
 version = "0.20.0"
 authors = [
 	"Max Brunsfeld <maxbrunsfeld@gmail.com>",
 	"Amaan Qureshi <amaanq12@gmail.com>",
+	"Vadim Pavlov <vaddsm@gmail.com>",
 ]
 license = "MIT"
 readme = "bindings/rust/README.md"
-keywords = ["incremental", "parsing", "html"]
+keywords = ["incremental", "parsing", "jshtml"]
 categories = ["parsing", "text-editors"]
-repository = "https://github.com/tree-sitter/tree-sitter-html"
-edition = "2021"
+repository = "https://github.com/Scheduleflow/tree-sitter-jshtml"
+edition = "2024"
 autoexamples = false
 
 build = "bindings/rust/build.rs"

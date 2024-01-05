@@ -12,6 +12,7 @@ module.exports = {
   },
   'rules': {
     'indent': ['error', 2, {'SwitchCase': 1}],
+    "require-jsdoc": "off",
     'max-len': [
       'error',
       {'code': 160, 'ignoreComments': true, 'ignoreUrls': true, 'ignoreStrings': true},

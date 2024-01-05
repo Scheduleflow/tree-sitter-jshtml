@@ -1,0 +1,237 @@
+==================
+a single variable
+==================
+
+<html>
+  {{ variable }}
+</html>
+
+---
+
+(fragment
+  (element
+    (start_tag
+      (tag_name))
+    (tpl_variable
+      (tpl_js_expression))
+    (end_tag
+      (tag_name))))
+
+
+==================
+two variables on a single line
+==================
+
+<html>
+  {{ variable }}{{ variable }}
+</html>
+
+---
+
+(fragment
+  (element
+    (start_tag
+      (tag_name))
+    (tpl_variable
+      (tpl_js_expression))
+    (tpl_variable
+      (tpl_js_expression))
+    (end_tag
+      (tag_name))))
+
+==================
+a variable wihout spaces
+==================
+
+<html>
+  {{variable}}
+</html>
+
+---
+
+(fragment
+  (element
+    (start_tag
+      (tag_name))
+    (tpl_variable
+      (tpl_js_expression))
+    (end_tag
+      (tag_name))))
+
+
+==================
+a variable with function calls
+==================
+
+<html>
+  {{ $T.func() }}
+  {{ $T.func({ param: { option: "value" } }) }}
+</html>
+
+---
+
+(fragment
+  (element
+    (start_tag
+      (tag_name))
+    (tpl_variable
+      (tpl_js_expression))
+    (tpl_variable
+      (tpl_js_expression))
+    (end_tag
+      (tag_name))))
+
+
+==================
+a variable over multiple lines
+==================
+
+<html>
+  {{
+    $T.variable
+  }}
+</html>
+
+---
+
+(fragment
+  (element
+    (start_tag
+      (tag_name))
+    (tpl_variable
+      (tpl_js_expression))
+    (end_tag
+      (tag_name))))
+
+
+==================
+a variable with a closing arrow bracket
+==================
+
+<html>
+  {{ a > b }}
+</html>
+
+---
+
+(fragment
+  (element
+    (start_tag
+      (tag_name))
+    (tpl_variable
+      (tpl_js_expression))
+    (end_tag
+      (tag_name))))
+
+
+==================
+a variable inside the element's attribute area
+==================
+
+<html {{ var }}>
+</html>
+
+---
+
+(fragment
+  (element
+    (start_tag
+      (tag_name)
+      (attribute
+        (attribute_name
+          (tpl_variable
+            (tpl_js_expression)))))
+    (end_tag
+      (tag_name))))
+
+
+==================
+a variable as an attribute value
+==================
+
+<html lang={{ var }}>
+</html>
+
+---
+
+ (fragment
+   (element
+     (start_tag
+       (tag_name)
+       (attribute
+         (attribute_name)
+         (attribute_value
+           (tpl_variable
+             (tpl_js_expression)))))
+     (end_tag
+       (tag_name))))
+
+==================
+a variable as a quoted attribute value
+==================
+
+<html lang="{{ var }}">
+</html>
+
+---
+
+ (fragment
+   (element
+     (start_tag
+       (tag_name)
+       (attribute
+         (attribute_name)
+         (quoted_attribute_value
+           (attribute_value
+             (tpl_variable
+               (tpl_js_expression))))))
+     (end_tag
+       (tag_name))))
+
+==================
+multiple variables in a quoted attribute value
+==================
+
+<html lang="{{ var1 }}-{{ var2 }}">
+</html>
+
+---
+
+    (fragment
+      (element
+        (start_tag
+          (tag_name)
+          (attribute
+            (attribute_name)
+            (quoted_attribute_value
+              (attribute_value
+                (tpl_variable
+                  (tpl_js_expression))
+                (value_fragment)
+                (tpl_variable
+                  (tpl_js_expression))))))
+        (end_tag
+          (tag_name))))
+
+
+==================
+a variable with a quote inside a quoted attribute value
+==================
+
+<html lang="{{ var('bar') }}">
+</html>
+
+---
+
+ (fragment
+   (element
+     (start_tag
+       (tag_name)
+       (attribute
+         (attribute_name)
+         (quoted_attribute_value
+           (attribute_value
+             (tpl_variable
+               (tpl_js_expression))))))
+     (end_tag
+       (tag_name))))

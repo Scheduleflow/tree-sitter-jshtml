@@ -1,0 +1,128 @@
+==================
+a template tag
+==================
+
+<html>
+  {% tag %}
+</html>
+
+---
+
+(fragment
+  (element
+    (start_tag
+      (tag_name))
+    (tpl_tag
+      (tpl_tag_name))
+    (end_tag
+      (tag_name))))
+
+==================
+a template tag with attributes
+==================
+
+<html>
+  {% tag attribute %}
+</html>
+
+---
+
+(fragment
+  (element
+    (start_tag
+      (tag_name))
+    (tpl_tag
+      (tpl_tag_name)
+      (tpl_tag_attributes))
+    (end_tag
+      (tag_name))))
+
+
+==================
+a template tag inside the element's attribute area
+==================
+
+<html {% tag %}>
+</html>
+
+---
+
+(fragment
+  (element
+    (start_tag
+      (tag_name)
+      (tpl_tag
+        (tpl_tag_name)))
+    (end_tag
+      (tag_name))))
+
+
+==================
+a template tag as an attribute value
+==================
+
+<html lang={% tag %}>
+</html>
+
+---
+
+(fragment
+  (element
+    (start_tag
+      (tag_name)
+      (attribute
+        (attribute_name)
+        (attribute_value
+          (tpl_tag
+            (tpl_tag_name)))))
+    (end_tag
+      (tag_name))))
+
+
+==================
+a template tag inside a quoted attribute value
+==================
+
+<html lang="{% tag %}">
+</html>
+
+---
+
+(fragment
+  (element
+    (start_tag
+      (tag_name)
+      (attribute
+        (attribute_name)
+        (quoted_attribute_value
+          (attribute_value
+            (tpl_tag
+              (tpl_tag_name))))))
+    (end_tag
+      (tag_name))))
+
+
+==================
+multiple template tags inside a quoted attribute value
+==================
+
+<html lang="{% tag %}-{% tag %}">
+</html>
+
+---
+
+(fragment
+  (element
+    (start_tag
+      (tag_name)
+      (attribute
+        (attribute_name)
+        (quoted_attribute_value
+          (attribute_value
+            (tpl_tag
+              (tpl_tag_name))
+            (value_fragment)
+            (tpl_tag
+              (tpl_tag_name))))))
+    (end_tag
+      (tag_name))))

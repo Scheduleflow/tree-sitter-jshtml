@@ -1,0 +1,195 @@
+
+==================
+an if statement
+==================
+
+{% if condition %}
+  Hello world
+{% endif %}
+
+---
+
+(fragment
+  (tpl_if
+    (tpl_start_tag (tpl_tag_name) (tpl_js_expression))
+    (text)
+    (tpl_end_tag (tpl_tag_name))))
+
+
+==================
+an if statement with a nested if statement
+==================
+
+{% if outer_condition %}
+  {% if inner_condition %}
+    Hello world
+  {% endif %}
+{% endif %}
+
+---
+
+(fragment
+  (tpl_if
+    (tpl_start_tag (tpl_tag_name) (tpl_js_expression))
+    (tpl_if
+      (tpl_start_tag (tpl_tag_name) (tpl_js_expression))
+      (text)
+      (tpl_end_tag (tpl_tag_name)))
+    (tpl_end_tag (tpl_tag_name))))
+
+
+==================
+an if statement with an else statement
+==================
+
+{% if first_condition %}
+  A
+{% else %}
+  B
+{% endif %}
+
+---
+
+(fragment
+  (tpl_if
+    (tpl_start_tag (tpl_tag_name) (tpl_js_expression))
+    (text)
+    (tpl_branch (tpl_tag_name))
+    (text)
+    (tpl_end_tag (tpl_tag_name))))
+
+
+==================
+an if statement with an elseif statement
+==================
+
+{% if first_condition %}
+  A
+{% elseif second_condition %}
+  B
+{% endif %}
+
+---
+
+(fragment
+  (tpl_if
+    (tpl_start_tag (tpl_tag_name) (tpl_js_expression))
+    (text)
+    (tpl_branch (tpl_tag_name) (tpl_js_expression))
+    (text)
+    (tpl_end_tag (tpl_tag_name))))
+
+
+==================
+an if statement with multiple branches
+==================
+
+{% if first_condition %}
+  A
+{% elseif second_condition %}
+  B
+{% elseif third_condition %}
+  C
+{% else %}
+  {% if condition %}
+    Hello world
+  {% endif %}
+{% endif %}
+
+---
+
+(fragment
+  (tpl_if
+    (tpl_start_tag (tpl_tag_name) (tpl_js_expression))
+    (text)
+    (tpl_branch (tpl_tag_name) (tpl_js_expression))
+    (text)
+    (tpl_branch (tpl_tag_name) (tpl_js_expression))
+    (text)
+    (tpl_branch (tpl_tag_name))
+    (tpl_if
+      (tpl_start_tag (tpl_tag_name) (tpl_js_expression))
+      (text)
+      (tpl_end_tag (tpl_tag_name)))
+    (tpl_end_tag (tpl_tag_name))))
+
+
+==================
+an if statement inside the element's attribute area
+==================
+
+<html {% if foo %}class="foo"{% endif %}></html>
+
+---
+
+(fragment
+  (element
+    (start_tag
+      (tag_name)
+      (tpl_if
+        (tpl_start_tag
+          (tpl_tag_name)
+          (tpl_js_expression))
+        (attribute
+          (attribute_name)
+          (quoted_attribute_value
+            (attribute_value
+              (value_fragment))))
+        (tpl_end_tag
+          (tpl_tag_name))))
+    (end_tag
+      (tag_name))))
+
+
+==================
+an if statement inside an attribute value wrapped in double quotes
+==================
+
+<html class="{% if foo %}foo'{% endif %}"></html>
+
+---
+
+(fragment
+  (element
+    (start_tag
+      (tag_name)
+      (attribute
+        (attribute_name)
+        (quoted_attribute_value
+          (attribute_value
+            (tpl_if
+              (tpl_start_tag
+                (tpl_tag_name)
+                (tpl_js_expression))
+              (value_fragment)
+              (tpl_end_tag
+                (tpl_tag_name)))))))
+    (end_tag
+      (tag_name))))
+
+
+==================
+an if statement inside an attribute value wrapped in single quotes
+==================
+
+<html class='{% if foo %}foo"{% endif %}'></html>
+
+---
+
+(fragment
+  (element
+    (start_tag
+      (tag_name)
+      (attribute
+        (attribute_name)
+        (quoted_attribute_value
+          (attribute_value
+            (tpl_if
+              (tpl_start_tag
+                (tpl_tag_name)
+                (tpl_js_expression))
+              (value_fragment)
+              (tpl_end_tag
+                (tpl_tag_name)))))))
+    (end_tag
+      (tag_name))))

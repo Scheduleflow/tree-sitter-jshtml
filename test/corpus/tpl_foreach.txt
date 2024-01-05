@@ -1,0 +1,143 @@
+==================
+an empty foreach statement
+==================
+
+{% foreach items as item %}
+{% endforeach %}
+
+---
+
+(fragment
+  (tpl_foreach
+    (tpl_start_tag
+      (tpl_tag_name)
+      (tpl_js_expression)
+      (keyword)
+      (variable_name))
+    (tpl_end_tag
+      (tpl_tag_name))))
+
+
+==================
+a foreach with nested elements
+==================
+
+{% foreach items as item %}
+  <div>{{ item.name }}</div>
+{% endforeach %}
+
+---
+
+(fragment
+  (tpl_foreach
+    (tpl_start_tag
+      (tpl_tag_name)
+      (tpl_js_expression)
+      (keyword)
+      (variable_name))
+    (element
+      (start_tag
+        (tag_name))
+      (tpl_variable
+        (tpl_js_expression))
+      (end_tag
+        (tag_name)))
+    (tpl_end_tag
+      (tpl_tag_name))))
+
+
+==================
+a foreach inside the element's attribute aria
+==================
+
+<html
+  {% foreach attrs as attr %}
+    {{ attr.name }}={{ attr.value }}
+  {% endforeach %}
+>
+</html>
+
+---
+
+(fragment
+  (element
+    (start_tag
+      (tag_name)
+      (tpl_foreach
+        (tpl_start_tag
+          (tpl_tag_name)
+          (tpl_js_expression)
+          (keyword)
+          (variable_name))
+        (attribute
+          (attribute_name
+            (tpl_variable
+              (tpl_js_expression)))
+          (attribute_value
+            (tpl_variable
+              (tpl_js_expression))))
+        (tpl_end_tag
+          (tpl_tag_name))))
+    (end_tag
+      (tag_name))))
+
+
+==================
+a foreach inside an attribute value wrapped in double quotes
+==================
+
+<html class="{% foreach items as item %}{{ item }}'{% endforeach %}"></html>
+
+---
+
+(fragment
+  (element
+    (start_tag
+      (tag_name)
+      (attribute
+        (attribute_name)
+        (quoted_attribute_value
+          (attribute_value
+            (tpl_foreach
+              (tpl_start_tag
+                (tpl_tag_name)
+                (tpl_js_expression)
+                (keyword)
+                (variable_name))
+              (tpl_variable
+                (tpl_js_expression))
+              (value_fragment)
+              (tpl_end_tag
+                (tpl_tag_name)))))))
+    (end_tag
+      (tag_name))))
+
+==================
+a foreach inside an attribute value wrapped in single quotes
+==================
+
+<html class='{% foreach items as item %}{{ item }}"{% endforeach %}'></html>
+
+---
+
+(fragment
+  (element
+    (start_tag
+      (tag_name)
+      (attribute
+        (attribute_name)
+        (quoted_attribute_value
+          (attribute_value
+            (tpl_foreach
+              (tpl_start_tag
+                (tpl_tag_name)
+                (tpl_js_expression)
+                (keyword)
+                (variable_name))
+              (tpl_variable
+                (tpl_js_expression))
+              (value_fragment)
+              (tpl_end_tag
+                (tpl_tag_name)))))))
+    (end_tag
+      (tag_name))))

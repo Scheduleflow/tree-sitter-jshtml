@@ -10,4 +10,14 @@
   ">"
   "</"
   "/>"
+  "{{"
+  "}}"
+  "{%"
+  "%}"
 ] @punctuation.bracket
+
+(tpl_tag_name) @function
+(tpl_tag_attributes) @string
+
+(keyword) @keyword
+(variable_name) @variable

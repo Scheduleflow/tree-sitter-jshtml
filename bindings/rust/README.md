@@ -1,4 +1,4 @@
-# tree-sitter-html
+# tree-sitter-jshtml
 
 This crate provides a HTML grammar for the [tree-sitter][] parsing library.
 To use this crate, add it to the `[dependencies]` section of your `Cargo.toml`
@@ -9,7 +9,7 @@ way.)
 ```toml
 [dependencies]
 tree-sitter = "0.20.10"
-tree-sitter-html = "0.20.0"
+tree-sitter-jshtml = "0.20.0"
 ```
 
 Typically, you will use the [language][language func] function to add this
@@ -21,7 +21,7 @@ let code = r#"
         return x * 2
 "#;
 let mut parser = Parser::new();
-parser.set_language(tree_sitter_html::language()).expect("Error loading HTML grammar");
+parser.set_language(tree_sitter_jshtml::language()).expect("Error loading HTML grammar");
 let parsed = parser.parse(code, None);
 ```
 

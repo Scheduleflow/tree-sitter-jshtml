@@ -1,0 +1,61 @@
+==================
+an empty block
+==================
+
+{% block name %}
+{% endblock %}
+
+---
+
+(fragment
+  (tpl_block
+    (tpl_start_tag
+      (tpl_tag_name)
+      (tpl_tag_attributes))
+    (tpl_end_tag
+      (tpl_tag_name))))
+
+
+==================
+a block with nested text
+==================
+
+{% block name %}
+  Hello
+{% endblock %}
+
+---
+
+(fragment
+  (tpl_block
+    (tpl_start_tag
+      (tpl_tag_name)
+      (tpl_tag_attributes))
+    (text)
+    (tpl_end_tag
+      (tpl_tag_name))))
+
+
+==================
+a block with nested elements
+==================
+
+{% block name %}
+  <div>Hello</div>
+{% endblock %}
+
+---
+
+(fragment
+  (tpl_block
+    (tpl_start_tag
+      (tpl_tag_name)
+      (tpl_tag_attributes))
+    (element
+      (start_tag
+        (tag_name))
+      (text)
+      (end_tag
+        (tag_name)))
+    (tpl_end_tag
+      (tpl_tag_name))))

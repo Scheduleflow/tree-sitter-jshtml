@@ -1,5 +1,5 @@
 {
-  "name": "tree-sitter-html",
+  "name": "tree-sitter-jshtml",
   "version": "0.20.0",
   "description": "HTML grammar for tree-sitter",
   "main": "bindings/node",
@@ -7,15 +7,13 @@
     "parser",
     "lexer"
   ],
-  "homepage": "https://github.com/tree-sitter/tree-sitter-html",
+  "homepage": "https://github.com/Scheduleflow/tree-sitter-jshtml",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tree-sitter/tree-sitter-html.git"
-  },
-  "bugs": {
-    "url": "https://github.com/tree-sitter/tree-sitter-html/issues"
+    "url": "git@github.com:Scheduleflow/tree-sitter-jshtml.git"
   },
   "authors": [
+    "Vadim Pavlov <vaddsm@gmail.com>",
     "Max Brunsfeld <maxbrunsfeld@gmail.com>",
     "Ashi Krishnan <queerviolet@github.com>",
     "Amaan Qureshi <amaanq12@gmail.com>"
@@ -37,13 +35,22 @@
   },
   "tree-sitter": [
     {
-      "scope": "text.html.basic",
+      "scope": "text.jshtml.basic",
+      "injection-regex": "jshtml",
       "file-types": [
         "html"
       ],
-      "injection-regex": "html",
       "highlights": [
         "queries/highlights.scm"
+      ],
+      "indents": [
+        "queries/indents.scm"
+      ],
+      "textobjects": [
+        "queries/textobjects.scm"
+      ],
+      "matchup": [
+        "queries/matchup.scm"
       ],
       "injections": [
         "queries/injections.scm"
