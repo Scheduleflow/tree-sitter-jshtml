@@ -250,47 +250,26 @@ static bool scan_raw_text(Scanner *scanner, TSLexer *lexer) {
     return true;
 }
 
-static bool scan_text(
-    TSLexer *lexer,
-    int32_t till,
-    bool ignore_space) {
-
-    bool is_text_found = false;
-
-    lexer->mark_end(lexer);
-
-    while (lexer->lookahead &&
-           lexer->lookahead != till &&
-           lexer->lookahead != '<' &&
-           lexer->lookahead != '>') {
-
-        if (lexer->lookahead == '{') {
-            lexer->advance(lexer, false);
-            if (lexer->lookahead == '{' || lexer->lookahead == '%') {
-                break;
-            }
-            is_text_found = true;
-            lexer->mark_end(lexer);
-        } else if (ignore_space && iswspace(lexer->lookahead)) {
-            lexer->advance(lexer, false);
-        } else {
-            is_text_found = true;
-            lexer->advance(lexer, false);
-            lexer->mark_end(lexer);
-        }
-    }
-
-    return is_text_found;
-}
-
-static bool scan_tpl_tag_arg(TSLexer *lexer) {
+static bool scan_content(TSLexer *lexer, char *till, bool ignore_space) {
 
     bool is_content_found = false;
 
     lexer->mark_end(lexer);
 
-    while (lexer->lookahead) {
+    for (;;) {
+
         int32_t head = lexer->lookahead;
+
+        if (!head) {
+            return is_content_found;
+        }
+
+        for (char *next_till = till; *next_till; next_till++) {
+            if (*next_till == head) {
+                return is_content_found;
+            }
+        }
+
         if (head == '{' || head == '}' || head == '%') {
             lexer->advance(lexer, false);
             int32_t next_head = lexer->lookahead;
@@ -298,11 +277,11 @@ static bool scan_tpl_tag_arg(TSLexer *lexer) {
                 (head == '}' && next_head == '}') ||
                 (head == '%' && next_head == '}')
             ) {
-                break;
+                return is_content_found;
             }
             is_content_found = true;
             lexer->mark_end(lexer);
-        } else if (iswspace(lexer->lookahead)) {
+        } else if (ignore_space && iswspace(head)) {
             lexer->advance(lexer, false);
         } else {
             is_content_found = true;
@@ -431,14 +410,14 @@ static bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
         return scan_raw_text(scanner, lexer);
     }
 
-    if (valid_symbols[SINGLE_QUOTED_FRAGMENT] &&
-        scan_text(lexer, '\'', false)) {
+    if (!valid_symbols[TPL_TAG_ARG] && valid_symbols[SINGLE_QUOTED_FRAGMENT] &&
+        scan_content(lexer, "'<>", false)) {
         lexer->result_symbol = SINGLE_QUOTED_FRAGMENT;
         return true;
     }
 
-    if (valid_symbols[DOUBLE_QUOTED_FRAGMENT] &&
-        scan_text(lexer, '"', false)) {
+    if (!valid_symbols[TPL_TAG_ARG] && valid_symbols[DOUBLE_QUOTED_FRAGMENT] &&
+        scan_content(lexer, "\"<>", false)) {
         lexer->result_symbol = DOUBLE_QUOTED_FRAGMENT;
         return true;
     }
@@ -447,15 +426,12 @@ static bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
         lexer->advance(lexer, true);
     }
 
-    if (valid_symbols[TPL_TAG_ARG] &&
-        scan_tpl_tag_arg(
-            lexer
-        )) {
+    if (valid_symbols[TPL_TAG_ARG] && scan_content(lexer, "", true)) {
         lexer->result_symbol = TPL_TAG_ARG;
         return true;
     }
 
-    if (valid_symbols[TEXT] && scan_text(lexer, '&', true)) {
+    if (valid_symbols[TEXT] && scan_content(lexer, "&<>", true)) {
         lexer->result_symbol = TEXT;
         return true;
     }

@@ -1,0 +1,92 @@
+==================
+a block with an incomplete tag
+==================
+
+{% block item %}
+    {% foo
+{% endblock %}
+
+---
+
+(fragment
+  (tpl_block
+    (tpl_start_tag
+      (tpl_tag_name)
+      (tpl_tag_attributes))
+    (tpl_tag
+      (tpl_tag_name)
+      (MISSING "%}"))
+    (tpl_end_tag
+      (tpl_tag_name))))
+
+==================
+a block with an incomplete variable
+==================
+
+{% block item %}
+    {{ foo
+{% endblock %}
+
+---
+
+(fragment
+  (tpl_block
+    (tpl_start_tag
+      (tpl_tag_name)
+      (tpl_tag_attributes))
+    (tpl_variable
+      (tpl_js_expression)
+      (MISSING "}}"))
+    (tpl_end_tag
+      (tpl_tag_name))))
+
+==================
+a block with an incomplete tag and an incomplete variable
+==================
+
+{% block item %}
+    {% foo mux
+    {{ bar mex
+{% endblock %}
+
+---
+
+(fragment
+  (tpl_block
+    (tpl_start_tag
+      (tpl_tag_name)
+      (tpl_tag_attributes))
+    (tpl_tag
+      (tpl_tag_name)
+      (tpl_tag_attributes)
+      (MISSING "%}"))
+    (tpl_variable
+      (tpl_js_expression)
+      (MISSING "}}"))
+    (tpl_end_tag
+      (tpl_tag_name))))
+
+==================
+a block with a tag with a nested variable
+==================
+
+{% block item %}
+    {% foo mux {{ bar mex }} %}
+{% endblock %}
+
+---
+
+(fragment
+  (tpl_block
+    (tpl_start_tag
+      (tpl_tag_name)
+      (tpl_tag_attributes))
+    (tpl_tag
+      (tpl_tag_name)
+      (tpl_tag_attributes)
+      (MISSING "%}"))
+    (tpl_variable
+      (tpl_js_expression))
+    (ERROR)
+    (tpl_end_tag
+      (tpl_tag_name))))
