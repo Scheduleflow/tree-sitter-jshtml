@@ -431,7 +431,7 @@ static bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
         return true;
     }
 
-    if (valid_symbols[TEXT] && scan_content(lexer, "&<>", true)) {
+    if (valid_symbols[TEXT] && scan_content(lexer, "<>", true)) {
         lexer->result_symbol = TEXT;
         return true;
     }

@@ -102,10 +102,6 @@
           "named": true
         },
         {
-          "type": "entity",
-          "named": true
-        },
-        {
           "type": "erroneous_end_tag",
           "named": true
         },
@@ -204,10 +200,6 @@
         },
         {
           "type": "element",
-          "named": true
-        },
-        {
-          "type": "entity",
           "named": true
         },
         {
@@ -413,10 +405,6 @@
           "named": true
         },
         {
-          "type": "entity",
-          "named": true
-        },
-        {
           "type": "erroneous_end_tag",
           "named": true
         },
@@ -526,10 +514,6 @@
           "named": true
         },
         {
-          "type": "entity",
-          "named": true
-        },
-        {
           "type": "erroneous_end_tag",
           "named": true
         },
@@ -606,10 +590,6 @@
         },
         {
           "type": "element",
-          "named": true
-        },
-        {
-          "type": "entity",
           "named": true
         },
         {
@@ -693,10 +673,6 @@
         },
         {
           "type": "element",
-          "named": true
-        },
-        {
-          "type": "entity",
           "named": true
         },
         {
@@ -829,10 +805,6 @@
           "named": true
         },
         {
-          "type": "entity",
-          "named": true
-        },
-        {
           "type": "erroneous_end_tag",
           "named": true
         },
@@ -949,10 +921,6 @@
   {
     "type": "doctype",
     "named": false
-  },
-  {
-    "type": "entity",
-    "named": true
   },
   {
     "type": "erroneous_end_tag_name",
