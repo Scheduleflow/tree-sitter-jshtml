@@ -82,6 +82,69 @@
     "fields": {}
   },
   {
+    "type": "document",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "doctype",
+          "named": true
+        },
+        {
+          "type": "element",
+          "named": true
+        },
+        {
+          "type": "erroneous_end_tag",
+          "named": true
+        },
+        {
+          "type": "script_element",
+          "named": true
+        },
+        {
+          "type": "style_element",
+          "named": true
+        },
+        {
+          "type": "text",
+          "named": true
+        },
+        {
+          "type": "tpl_block",
+          "named": true
+        },
+        {
+          "type": "tpl_foreach",
+          "named": true
+        },
+        {
+          "type": "tpl_if",
+          "named": true
+        },
+        {
+          "type": "tpl_slot",
+          "named": true
+        },
+        {
+          "type": "tpl_tag",
+          "named": true
+        },
+        {
+          "type": "tpl_use",
+          "named": true
+        },
+        {
+          "type": "tpl_variable",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "element",
     "named": true,
     "fields": {},
@@ -181,69 +244,6 @@
       "types": [
         {
           "type": "erroneous_end_tag_name",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "fragment",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "doctype",
-          "named": true
-        },
-        {
-          "type": "element",
-          "named": true
-        },
-        {
-          "type": "erroneous_end_tag",
-          "named": true
-        },
-        {
-          "type": "script_element",
-          "named": true
-        },
-        {
-          "type": "style_element",
-          "named": true
-        },
-        {
-          "type": "text",
-          "named": true
-        },
-        {
-          "type": "tpl_block",
-          "named": true
-        },
-        {
-          "type": "tpl_foreach",
-          "named": true
-        },
-        {
-          "type": "tpl_if",
-          "named": true
-        },
-        {
-          "type": "tpl_slot",
-          "named": true
-        },
-        {
-          "type": "tpl_tag",
-          "named": true
-        },
-        {
-          "type": "tpl_use",
-          "named": true
-        },
-        {
-          "type": "tpl_variable",
           "named": true
         }
       ]

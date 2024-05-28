@@ -8,7 +8,7 @@ a single variable
 
 ---
 
-(fragment
+(document
   (element
     (start_tag
       (tag_name))
@@ -28,7 +28,7 @@ two variables on a single line
 
 ---
 
-(fragment
+(document
   (element
     (start_tag
       (tag_name))
@@ -49,7 +49,7 @@ a variable wihout spaces
 
 ---
 
-(fragment
+(document
   (element
     (start_tag
       (tag_name))
@@ -70,7 +70,7 @@ a variable with function calls
 
 ---
 
-(fragment
+(document
   (element
     (start_tag
       (tag_name))
@@ -94,7 +94,7 @@ a variable over multiple lines
 
 ---
 
-(fragment
+(document
   (element
     (start_tag
       (tag_name))
@@ -114,7 +114,7 @@ a variable with a closing arrow bracket
 
 ---
 
-(fragment
+(document
   (element
     (start_tag
       (tag_name))
@@ -133,7 +133,7 @@ a variable inside the element's attribute area
 
 ---
 
-(fragment
+(document
   (element
     (start_tag
       (tag_name)
@@ -154,7 +154,7 @@ a variable as an attribute value
 
 ---
 
- (fragment
+ (document
    (element
      (start_tag
        (tag_name)
@@ -175,7 +175,7 @@ a variable as a quoted attribute value
 
 ---
 
- (fragment
+ (document
    (element
      (start_tag
        (tag_name)
@@ -197,7 +197,7 @@ multiple variables in a quoted attribute value
 
 ---
 
-    (fragment
+    (document
       (element
         (start_tag
           (tag_name)
@@ -223,7 +223,7 @@ a variable with a quote inside a quoted attribute value
 
 ---
 
- (fragment
+ (document
    (element
      (start_tag
        (tag_name)

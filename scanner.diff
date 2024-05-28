@@ -1,0 +1,261 @@
+diff --git a/src/scanner.c b/src/scanner.c
+index 9ec2915..6ba0743 100644
+--- a/src/scanner.c
++++ b/src/scanner.c
+@@ -11,6 +11,10 @@ enum TokenType {
+     SELF_CLOSING_TAG_DELIMITER,
+     IMPLICIT_END_TAG,
+     RAW_TEXT,
++    TEXT,
++    SINGLE_QUOTED_FRAGMENT,
++    DOUBLE_QUOTED_FRAGMENT,
++    TPL_TAG_ARG,
+     COMMENT
+ };
+ 
+@@ -34,11 +38,6 @@ typedef struct {
+         (vec).cap = (_cap);                                                    \
+     }
+ 
+-#define VEC_GROW(vec, _cap)                                                    \
+-    if ((vec).cap < (_cap)) {                                                  \
+-        VEC_RESIZE((vec), (_cap));                                             \
+-    }
+-
+ #define VEC_PUSH(vec, el)                                                      \
+     if ((vec).cap == (vec).len) {                                              \
+         VEC_RESIZE((vec), MAX(16, (vec).len * 2));                             \
+@@ -78,11 +77,6 @@ typedef struct {
+            (((_cap) + 1) - (vec).len) * sizeof((vec).data[0]));                \
+     (vec).cap = (_cap);
+ 
+-#define STRING_GROW(vec, _cap)                                                 \
+-    if ((vec).cap < (_cap)) {                                                  \
+-        STRING_RESIZE((vec), (_cap));                                          \
+-    }
+-
+ #define STRING_PUSH(vec, el)                                                   \
+     if ((vec).cap == (vec).len) {                                              \
+         STRING_RESIZE((vec), MAX(16, (vec).len * 2));                          \
+@@ -103,12 +97,6 @@ typedef struct {
+         (vec).data = NULL;                                                     \
+     }
+ 
+-#define STRING_CLEAR(vec)                                                      \
+-    {                                                                          \
+-        (vec).len = 0;                                                         \
+-        memset((vec).data, 0, (vec).cap * sizeof(char));                       \
+-    }
+-
+ static unsigned serialize(Scanner *scanner, char *buffer) {
+     uint16_t tag_count =
+         scanner->tags.len > UINT16_MAX ? UINT16_MAX : scanner->tags.len;
+@@ -146,43 +134,47 @@ static unsigned serialize(Scanner *scanner, char *buffer) {
+ }
+ 
+ static void deserialize(Scanner *scanner, const char *buffer, unsigned length) {
++
+     VEC_CLEAR(scanner->tags);
+-    if (length > 0) {
+-        unsigned size = 0;
+-        uint16_t tag_count = 0;
+-        uint16_t serialized_tag_count = 0;
+-
+-        memcpy(&serialized_tag_count, &buffer[size],
+-               sizeof(serialized_tag_count));
+-        size += sizeof(serialized_tag_count);
+-
+-        memcpy(&tag_count, &buffer[size], sizeof(tag_count));
+-        size += sizeof(tag_count);
+-
+-        VEC_RESIZE(scanner->tags, tag_count);
+-        if (tag_count > 0) {
+-            unsigned iter = 0;
+-            for (iter = 0; iter < serialized_tag_count; iter++) {
+-                Tag tag = scanner->tags.data[iter];
+-                tag.type = (TagType)buffer[size++];
+-                if (tag.type == CUSTOM) {
+-                    uint16_t name_length = (uint8_t)buffer[size++];
+-                    tag.custom_tag_name.len = name_length;
+-                    tag.custom_tag_name.cap = name_length;
+-                    tag.custom_tag_name.data =
+-                        (char *)calloc(1, sizeof(char) * (name_length + 1));
+-                    strncpy(tag.custom_tag_name.data, &buffer[size],
+-                            name_length);
+-                    size += name_length;
+-                }
+-                VEC_PUSH(scanner->tags, tag);
+-            }
+-            // add zero tags if we didn't read enough, this is because the
+-            // buffer had no more room but we held more tags.
+-            for (; iter < tag_count; iter++) {
+-                Tag tag = new_tag();
+-                VEC_PUSH(scanner->tags, tag);
++
++    if (length <= 0) {
++        return;
++    }
++
++    unsigned size = 0;
++    uint16_t tag_count = 0;
++    uint16_t serialized_tag_count = 0;
++
++    memcpy(&serialized_tag_count, &buffer[size],
++           sizeof(serialized_tag_count));
++    size += sizeof(serialized_tag_count);
++
++    memcpy(&tag_count, &buffer[size], sizeof(tag_count));
++    size += sizeof(tag_count);
++
++    VEC_RESIZE(scanner->tags, tag_count);
++    if (tag_count > 0) {
++        unsigned iter = 0;
++        for (iter = 0; iter < serialized_tag_count; iter++) {
++            Tag tag = scanner->tags.data[iter];
++            tag.type = (TagType)buffer[size++];
++            if (tag.type == CUSTOM) {
++                uint16_t name_length = (uint8_t)buffer[size++];
++                tag.custom_tag_name.len = name_length;
++                tag.custom_tag_name.cap = name_length;
++                tag.custom_tag_name.data =
++                    (char *)calloc(1, sizeof(char) * (name_length + 1));
++                strncpy(tag.custom_tag_name.data, &buffer[size],
++                        name_length);
++                size += name_length;
+             }
++            VEC_PUSH(scanner->tags, tag);
++        }
++        // add zero tags if we didn't read enough, this is because the
++        // buffer had no more room but we held more tags.
++        for (; iter < tag_count; iter++) {
++            Tag tag = new_tag();
++            VEC_PUSH(scanner->tags, tag);
+         }
+     }
+ }
+@@ -258,6 +250,49 @@ static bool scan_raw_text(Scanner *scanner, TSLexer *lexer) {
+     return true;
+ }
+ 
++static bool scan_content(TSLexer *lexer, char *till, bool ignore_space) {
++
++    bool is_content_found = false;
++
++    lexer->mark_end(lexer);
++
++    for (;;) {
++
++        int32_t head = lexer->lookahead;
++
++        if (!head) {
++            return is_content_found;
++        }
++
++        for (char *next_till = till; *next_till; next_till++) {
++            if (*next_till == head) {
++                return is_content_found;
++            }
++        }
++
++        if (head == '{' || head == '}' || head == '%') {
++            lexer->advance(lexer, false);
++            int32_t next_head = lexer->lookahead;
++            if ((head == '{' && (next_head == '{' || next_head == '%')) ||
++                (head == '}' && next_head == '}') ||
++                (head == '%' && next_head == '}')
++            ) {
++                return is_content_found;
++            }
++            is_content_found = true;
++            lexer->mark_end(lexer);
++        } else if (ignore_space && iswspace(head)) {
++            lexer->advance(lexer, false);
++        } else {
++            is_content_found = true;
++            lexer->advance(lexer, false);
++            lexer->mark_end(lexer);
++        }
++    }
++
++    return is_content_found;
++}
++
+ static bool scan_implicit_end_tag(Scanner *scanner, TSLexer *lexer) {
+     Tag *parent = scanner->tags.len == 0 ? NULL : &VEC_BACK(scanner->tags);
+ 
+@@ -369,15 +404,38 @@ static bool scan_self_closing_tag_delimiter(Scanner *scanner, TSLexer *lexer) {
+ }
+ 
+ static bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
++
+     if (valid_symbols[RAW_TEXT] && !valid_symbols[START_TAG_NAME] &&
+         !valid_symbols[END_TAG_NAME]) {
+         return scan_raw_text(scanner, lexer);
+     }
+ 
++    if (!valid_symbols[TPL_TAG_ARG] && valid_symbols[SINGLE_QUOTED_FRAGMENT] &&
++        scan_content(lexer, "'<>", false)) {
++        lexer->result_symbol = SINGLE_QUOTED_FRAGMENT;
++        return true;
++    }
++
++    if (!valid_symbols[TPL_TAG_ARG] && valid_symbols[DOUBLE_QUOTED_FRAGMENT] &&
++        scan_content(lexer, "\"<>", false)) {
++        lexer->result_symbol = DOUBLE_QUOTED_FRAGMENT;
++        return true;
++    }
++
+     while (iswspace(lexer->lookahead)) {
+         lexer->advance(lexer, true);
+     }
+ 
++    if (valid_symbols[TPL_TAG_ARG] && scan_content(lexer, "", true)) {
++        lexer->result_symbol = TPL_TAG_ARG;
++        return true;
++    }
++
++    if (valid_symbols[TEXT] && scan_content(lexer, "<>", true)) {
++        lexer->result_symbol = TEXT;
++        return true;
++    }
++
+     switch (lexer->lookahead) {
+         case '<':
+             lexer->mark_end(lexer);
+@@ -418,31 +476,31 @@ static bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
+     return false;
+ }
+ 
+-void *tree_sitter_html_external_scanner_create() {
++void *tree_sitter_jshtml_external_scanner_create() {
+     Scanner *scanner = (Scanner *)calloc(1, sizeof(Scanner));
+     return scanner;
+ }
+ 
+-bool tree_sitter_html_external_scanner_scan(void *payload, TSLexer *lexer,
++bool tree_sitter_jshtml_external_scanner_scan(void *payload, TSLexer *lexer,
+                                             const bool *valid_symbols) {
+     Scanner *scanner = (Scanner *)payload;
+     return scan(scanner, lexer, valid_symbols);
+ }
+ 
+-unsigned tree_sitter_html_external_scanner_serialize(void *payload,
++unsigned tree_sitter_jshtml_external_scanner_serialize(void *payload,
+                                                      char *buffer) {
+     Scanner *scanner = (Scanner *)payload;
+     return serialize(scanner, buffer);
+ }
+ 
+-void tree_sitter_html_external_scanner_deserialize(void *payload,
++void tree_sitter_jshtml_external_scanner_deserialize(void *payload,
+                                                    const char *buffer,
+                                                    unsigned length) {
+     Scanner *scanner = (Scanner *)payload;
+     deserialize(scanner, buffer, length);
+ }
+ 
+-void tree_sitter_html_external_scanner_destroy(void *payload) {
++void tree_sitter_jshtml_external_scanner_destroy(void *payload) {
+     Scanner *scanner = (Scanner *)payload;
+     for (unsigned i = 0; i < scanner->tags.len; i++) {
+         STRING_FREE(scanner->tags.data[i].custom_tag_name);

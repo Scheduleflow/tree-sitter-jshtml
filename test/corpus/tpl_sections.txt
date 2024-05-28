@@ -7,7 +7,7 @@ an empty slot
 
 ---
 
-(fragment
+(document
   (tpl_slot
     (tpl_start_tag
       (tpl_tag_name)
@@ -26,7 +26,7 @@ a slot with nested text
 
 ---
 
-(fragment
+(document
   (tpl_slot
     (tpl_start_tag
       (tpl_tag_name)
@@ -46,7 +46,7 @@ a slot with nested elements
 
 ---
 
-(fragment
+(document
   (tpl_slot
     (tpl_start_tag
       (tpl_tag_name)
@@ -69,7 +69,7 @@ a slot inside the element's attribute aria
 
 ---
 
-(fragment
+(document
   (element
     (start_tag
       (tag_name)
@@ -95,7 +95,7 @@ a slot inside an attribute value wrapped in double quotes
 
 ---
 
-(fragment
+(document
   (element
     (start_tag
       (tag_name)
@@ -121,7 +121,7 @@ a slot inside an attribute value wrapped in single quotes
 
 ---
 
-(fragment
+(document
   (element
     (start_tag
       (tag_name)

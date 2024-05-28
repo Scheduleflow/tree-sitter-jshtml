@@ -7,7 +7,7 @@ an empty use statement
 
 ---
 
-(fragment
+(document
   (tpl_use
     (tpl_start_tag
       (tpl_tag_name)
@@ -26,7 +26,7 @@ a use statement with nested text
 
 ---
 
-(fragment
+(document
   (tpl_use
     (tpl_start_tag
       (tpl_tag_name)
@@ -48,7 +48,7 @@ a use statement with a slot inside
 
 ---
 
-(fragment
+(document
   (tpl_use
     (tpl_start_tag
       (tpl_tag_name)
@@ -74,7 +74,7 @@ a use statement with nested elements
 
 ---
 
-(fragment
+(document
   (tpl_use
     (tpl_start_tag
       (tpl_tag_name)
@@ -97,7 +97,7 @@ a use statement inside the element's attribute aria
 
 ---
 
-(fragment
+(document
   (element
     (start_tag
       (tag_name)
@@ -123,7 +123,7 @@ a use statement inside an attribute value wrapped in double quotes
 
 ---
 
-(fragment
+(document
   (element
     (start_tag
       (tag_name)
@@ -149,7 +149,7 @@ a use statement inside an attribute value wrapped in single quotes
 
 ---
 
-(fragment
+(document
   (element
     (start_tag
       (tag_name)

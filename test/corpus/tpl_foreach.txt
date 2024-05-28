@@ -7,7 +7,7 @@ an empty foreach statement
 
 ---
 
-(fragment
+(document
   (tpl_foreach
     (tpl_start_tag
       (tpl_tag_name)
@@ -28,7 +28,7 @@ a foreach with nested elements
 
 ---
 
-(fragment
+(document
   (tpl_foreach
     (tpl_start_tag
       (tpl_tag_name)
@@ -59,7 +59,7 @@ a foreach inside the element's attribute aria
 
 ---
 
-(fragment
+(document
   (element
     (start_tag
       (tag_name)
@@ -90,7 +90,7 @@ a foreach inside an attribute value wrapped in double quotes
 
 ---
 
-(fragment
+(document
   (element
     (start_tag
       (tag_name)
@@ -120,7 +120,7 @@ a foreach inside an attribute value wrapped in single quotes
 
 ---
 
-(fragment
+(document
   (element
     (start_tag
       (tag_name)

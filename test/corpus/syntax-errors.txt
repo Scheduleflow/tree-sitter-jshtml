@@ -8,7 +8,7 @@ a block with an incomplete tag
 
 ---
 
-(fragment
+(document
   (tpl_block
     (tpl_start_tag
       (tpl_tag_name)
@@ -29,7 +29,7 @@ a block with an incomplete variable
 
 ---
 
-(fragment
+(document
   (tpl_block
     (tpl_start_tag
       (tpl_tag_name)
@@ -51,7 +51,7 @@ a block with an incomplete tag and an incomplete variable
 
 ---
 
-(fragment
+(document
   (tpl_block
     (tpl_start_tag
       (tpl_tag_name)
@@ -76,7 +76,7 @@ a block with a tag with a nested variable
 
 ---
 
-(fragment
+(document
   (tpl_block
     (tpl_start_tag
       (tpl_tag_name)

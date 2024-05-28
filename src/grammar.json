@@ -1,7 +1,7 @@
 {
   "name": "jshtml",
   "rules": {
-    "fragment": {
+    "document": {
       "type": "REPEAT",
       "content": {
         "type": "SYMBOL",
@@ -2206,4 +2206,3 @@
   "inline": [],
   "supertypes": []
 }
-

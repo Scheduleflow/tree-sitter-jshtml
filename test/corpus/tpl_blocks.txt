@@ -7,7 +7,7 @@ an empty block
 
 ---
 
-(fragment
+(document
   (tpl_block
     (tpl_start_tag
       (tpl_tag_name)
@@ -26,7 +26,7 @@ a block with nested text
 
 ---
 
-(fragment
+(document
   (tpl_block
     (tpl_start_tag
       (tpl_tag_name)
@@ -46,7 +46,7 @@ a block with nested elements
 
 ---
 
-(fragment
+(document
   (tpl_block
     (tpl_start_tag
       (tpl_tag_name)

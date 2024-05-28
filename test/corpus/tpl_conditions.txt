@@ -9,7 +9,7 @@ an if statement
 
 ---
 
-(fragment
+(document
   (tpl_if
     (tpl_start_tag (tpl_tag_name) (tpl_js_expression))
     (text)
@@ -28,7 +28,7 @@ an if statement with a nested if statement
 
 ---
 
-(fragment
+(document
   (tpl_if
     (tpl_start_tag (tpl_tag_name) (tpl_js_expression))
     (tpl_if
@@ -50,7 +50,7 @@ an if statement with an else statement
 
 ---
 
-(fragment
+(document
   (tpl_if
     (tpl_start_tag (tpl_tag_name) (tpl_js_expression))
     (text)
@@ -71,7 +71,7 @@ an if statement with an elseif statement
 
 ---
 
-(fragment
+(document
   (tpl_if
     (tpl_start_tag (tpl_tag_name) (tpl_js_expression))
     (text)
@@ -98,7 +98,7 @@ an if statement with multiple branches
 
 ---
 
-(fragment
+(document
   (tpl_if
     (tpl_start_tag (tpl_tag_name) (tpl_js_expression))
     (text)
@@ -122,7 +122,7 @@ an if statement inside the element's attribute area
 
 ---
 
-(fragment
+(document
   (element
     (start_tag
       (tag_name)
@@ -149,7 +149,7 @@ an if statement inside an attribute value wrapped in double quotes
 
 ---
 
-(fragment
+(document
   (element
     (start_tag
       (tag_name)
@@ -176,7 +176,7 @@ an if statement inside an attribute value wrapped in single quotes
 
 ---
 
-(fragment
+(document
   (element
     (start_tag
       (tag_name)
