@@ -83,7 +83,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "tpl_section"
+          "name": "tpl_slot"
         },
         {
           "type": "SYMBOL",
@@ -390,10 +390,10 @@
           "type": "ALIAS",
           "content": {
             "type": "SYMBOL",
-            "name": "_tpl_section_in_attr_area"
+            "name": "_tpl_slot_in_attr_area"
           },
           "named": true,
-          "value": "tpl_section"
+          "value": "tpl_slot"
         }
       ]
     },
@@ -576,10 +576,10 @@
           "type": "ALIAS",
           "content": {
             "type": "SYMBOL",
-            "name": "_tpl_section_in_single_quoted_attr"
+            "name": "_tpl_slot_in_single_quoted_attr"
           },
           "named": true,
-          "value": "tpl_section"
+          "value": "tpl_slot"
         },
         {
           "type": "ALIAS",
@@ -637,10 +637,10 @@
           "type": "ALIAS",
           "content": {
             "type": "SYMBOL",
-            "name": "_tpl_section_in_double_quoted_attr"
+            "name": "_tpl_slot_in_double_quoted_attr"
           },
           "named": true,
-          "value": "tpl_section"
+          "value": "tpl_slot"
         },
         {
           "type": "ALIAS",
@@ -1118,14 +1118,14 @@
         }
       ]
     },
-    "tpl_section": {
+    "tpl_slot": {
       "type": "SEQ",
       "members": [
         {
           "type": "ALIAS",
           "content": {
             "type": "SYMBOL",
-            "name": "_tpl_section_start"
+            "name": "_tpl_slot_start"
           },
           "named": true,
           "value": "tpl_start_tag"
@@ -1141,21 +1141,21 @@
           "type": "ALIAS",
           "content": {
             "type": "SYMBOL",
-            "name": "_tpl_section_end"
+            "name": "_tpl_slot_end"
           },
           "named": true,
           "value": "tpl_end_tag"
         }
       ]
     },
-    "_tpl_section_in_attr_area": {
+    "_tpl_slot_in_attr_area": {
       "type": "SEQ",
       "members": [
         {
           "type": "ALIAS",
           "content": {
             "type": "SYMBOL",
-            "name": "_tpl_section_start"
+            "name": "_tpl_slot_start"
           },
           "named": true,
           "value": "tpl_start_tag"
@@ -1171,21 +1171,21 @@
           "type": "ALIAS",
           "content": {
             "type": "SYMBOL",
-            "name": "_tpl_section_end"
+            "name": "_tpl_slot_end"
           },
           "named": true,
           "value": "tpl_end_tag"
         }
       ]
     },
-    "_tpl_section_in_double_quoted_attr": {
+    "_tpl_slot_in_double_quoted_attr": {
       "type": "SEQ",
       "members": [
         {
           "type": "ALIAS",
           "content": {
             "type": "SYMBOL",
-            "name": "_tpl_section_start"
+            "name": "_tpl_slot_start"
           },
           "named": true,
           "value": "tpl_start_tag"
@@ -1201,21 +1201,21 @@
           "type": "ALIAS",
           "content": {
             "type": "SYMBOL",
-            "name": "_tpl_section_end"
+            "name": "_tpl_slot_end"
           },
           "named": true,
           "value": "tpl_end_tag"
         }
       ]
     },
-    "_tpl_section_in_single_quoted_attr": {
+    "_tpl_slot_in_single_quoted_attr": {
       "type": "SEQ",
       "members": [
         {
           "type": "ALIAS",
           "content": {
             "type": "SYMBOL",
-            "name": "_tpl_section_start"
+            "name": "_tpl_slot_start"
           },
           "named": true,
           "value": "tpl_start_tag"
@@ -1231,14 +1231,14 @@
           "type": "ALIAS",
           "content": {
             "type": "SYMBOL",
-            "name": "_tpl_section_end"
+            "name": "_tpl_slot_end"
           },
           "named": true,
           "value": "tpl_end_tag"
         }
       ]
     },
-    "_tpl_section_start": {
+    "_tpl_slot_start": {
       "type": "SEQ",
       "members": [
         {
@@ -1261,7 +1261,7 @@
           "type": "ALIAS",
           "content": {
             "type": "STRING",
-            "value": "section"
+            "value": "slot"
           },
           "named": true,
           "value": "tpl_tag_name"
@@ -1290,7 +1290,7 @@
         }
       ]
     },
-    "_tpl_section_end": {
+    "_tpl_slot_end": {
       "type": "SEQ",
       "members": [
         {
@@ -1313,7 +1313,7 @@
           "type": "ALIAS",
           "content": {
             "type": "STRING",
-            "value": "endsection"
+            "value": "endslot"
           },
           "named": true,
           "value": "tpl_tag_name"
@@ -1463,7 +1463,7 @@
                   "type": "REPEAT",
                   "content": {
                     "type": "SYMBOL",
-                    "name": "_node"
+                    "name": "_attribute_area"
                   }
                 }
               ]
@@ -1489,7 +1489,7 @@
                   "type": "REPEAT",
                   "content": {
                     "type": "SYMBOL",
-                    "name": "_node"
+                    "name": "_attribute_area"
                   }
                 }
               ]
@@ -1550,7 +1550,7 @@
                   "type": "REPEAT",
                   "content": {
                     "type": "SYMBOL",
-                    "name": "_node"
+                    "name": "_single_quoted_attribute_value_node"
                   }
                 }
               ]
@@ -1576,7 +1576,7 @@
                   "type": "REPEAT",
                   "content": {
                     "type": "SYMBOL",
-                    "name": "_node"
+                    "name": "_single_quoted_attribute_value_node"
                   }
                 }
               ]
@@ -1637,7 +1637,7 @@
                   "type": "REPEAT",
                   "content": {
                     "type": "SYMBOL",
-                    "name": "_node"
+                    "name": "_double_quoted_attribute_value_node"
                   }
                 }
               ]
@@ -1663,7 +1663,7 @@
                   "type": "REPEAT",
                   "content": {
                     "type": "SYMBOL",
-                    "name": "_node"
+                    "name": "_double_quoted_attribute_value_node"
                   }
                 }
               ]

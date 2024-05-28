@@ -54,7 +54,7 @@
           "named": true
         },
         {
-          "type": "tpl_section",
+          "type": "tpl_slot",
           "named": true
         },
         {
@@ -138,7 +138,7 @@
           "named": true
         },
         {
-          "type": "tpl_section",
+          "type": "tpl_slot",
           "named": true
         },
         {
@@ -231,7 +231,7 @@
           "named": true
         },
         {
-          "type": "tpl_section",
+          "type": "tpl_slot",
           "named": true
         },
         {
@@ -312,7 +312,7 @@
           "named": true
         },
         {
-          "type": "tpl_section",
+          "type": "tpl_slot",
           "named": true
         },
         {
@@ -351,7 +351,7 @@
           "named": true
         },
         {
-          "type": "tpl_section",
+          "type": "tpl_slot",
           "named": true
         },
         {
@@ -437,7 +437,7 @@
           "named": true
         },
         {
-          "type": "tpl_section",
+          "type": "tpl_slot",
           "named": true
         },
         {
@@ -546,7 +546,7 @@
           "named": true
         },
         {
-          "type": "tpl_section",
+          "type": "tpl_slot",
           "named": true
         },
         {
@@ -629,7 +629,7 @@
           "named": true
         },
         {
-          "type": "tpl_section",
+          "type": "tpl_slot",
           "named": true
         },
         {
@@ -656,7 +656,7 @@
     }
   },
   {
-    "type": "tpl_section",
+    "type": "tpl_slot",
     "named": true,
     "fields": {},
     "children": {
@@ -708,7 +708,7 @@
           "named": true
         },
         {
-          "type": "tpl_section",
+          "type": "tpl_slot",
           "named": true
         },
         {
@@ -837,7 +837,7 @@
           "named": true
         },
         {
-          "type": "tpl_section",
+          "type": "tpl_slot",
           "named": true
         },
         {

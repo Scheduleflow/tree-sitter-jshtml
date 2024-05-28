@@ -51,7 +51,7 @@ module.exports = grammar({
       $.tpl_tag,
       $.tpl_block,
       $.tpl_use,
-      $.tpl_section,
+      $.tpl_slot,
       $.tpl_if,
       $.tpl_foreach,
     ),
@@ -123,7 +123,7 @@ module.exports = grammar({
       alias($._tpl_if_in_attr_area, $.tpl_if),
       alias($._tpl_foreach_in_attr_area, $.tpl_foreach),
       alias($._tpl_use_in_attr_area, $.tpl_use),
-      alias($._tpl_section_in_attr_area, $.tpl_section),
+      alias($._tpl_slot_in_attr_area, $.tpl_slot),
     ),
 
     attribute: ($) => seq(
@@ -170,7 +170,7 @@ module.exports = grammar({
       alias($._tpl_if_in_single_quoted_attr, $.tpl_if),
       alias($._tpl_foreach_in_single_quoted_attr, $.tpl_foreach),
       alias($._tpl_use_in_single_quoted_attr, $.tpl_use),
-      alias($._tpl_section_in_single_quoted_attr, $.tpl_section),
+      alias($._tpl_slot_in_single_quoted_attr, $.tpl_slot),
       alias($._single_quoted_value_fragment, $.value_fragment),
     ),
 
@@ -183,7 +183,7 @@ module.exports = grammar({
       alias($._tpl_if_in_double_quoted_attr, $.tpl_if),
       alias($._tpl_foreach_in_double_quoted_attr, $.tpl_foreach),
       alias($._tpl_use_in_double_quoted_attr, $.tpl_use),
-      alias($._tpl_section_in_double_quoted_attr, $.tpl_section),
+      alias($._tpl_slot_in_double_quoted_attr, $.tpl_slot),
       alias($._double_quoted_value_fragment, $.value_fragment),
     ),
 
@@ -225,19 +225,19 @@ module.exports = grammar({
     ),
     _tpl_use_end: ($) => buildTplEndTag($, 'use'),
 
-    /* section statement */
-    tpl_section: ($) => buildTplSection($, $._node),
-    _tpl_section_in_attr_area: ($) => buildTplSection($, $._attribute_area),
-    _tpl_section_in_double_quoted_attr: ($) => buildTplSection(
+    /* slot statement */
+    tpl_slot: ($) => buildTplSection($, $._node),
+    _tpl_slot_in_attr_area: ($) => buildTplSection($, $._attribute_area),
+    _tpl_slot_in_double_quoted_attr: ($) => buildTplSection(
       $, $._double_quoted_attribute_value_node,
     ),
-    _tpl_section_in_single_quoted_attr: ($) => buildTplSection(
+    _tpl_slot_in_single_quoted_attr: ($) => buildTplSection(
       $, $._single_quoted_attribute_value_node,
     ),
-    _tpl_section_start: ($) => buildTplTag(
-      $, 'section', alias(/[-\w]+/, $.tpl_tag_attributes),
+    _tpl_slot_start: ($) => buildTplTag(
+      $, 'slot', alias(/[-\w]+/, $.tpl_tag_attributes),
     ),
-    _tpl_section_end: ($) => buildTplEndTag($, 'section'),
+    _tpl_slot_end: ($) => buildTplEndTag($, 'slot'),
 
     /* if statement */
     tpl_if: ($) => buildTplIf($, $._node),
@@ -302,9 +302,9 @@ function buildTplUse($, content) {
 
 function buildTplSection($, content) {
   return seq(
-    alias($._tpl_section_start, $.tpl_start_tag),
+    alias($._tpl_slot_start, $.tpl_start_tag),
     repeat(content),
-    alias($._tpl_section_end, $.tpl_end_tag),
+    alias($._tpl_slot_end, $.tpl_end_tag),
   );
 }
 
@@ -324,14 +324,14 @@ function buildTplIf($, content) {
       prec.left(
         seq(
           alias($._tpl_elseif, $.tpl_branch),
-          repeat($._node),
+          repeat(content),
         ),
       ),
     ),
     optional(
       seq(
         alias($._tpl_else, $.tpl_branch),
-        repeat($._node),
+        repeat(content),
       ),
     ),
     alias($._tpl_endif, $.tpl_end_tag),

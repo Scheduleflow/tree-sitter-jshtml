@@ -37,13 +37,13 @@ a use statement with nested text
 
 
 ==================
-a use statement with a section inside
+a use statement with a slot inside
 ==================
 
 {% use "button.html" %}
-  {% section caption %}
+  {% slot caption %}
     Save
-  {% endsection %}
+  {% endslot %}
 {% enduse %}
 
 ---
@@ -53,7 +53,7 @@ a use statement with a section inside
     (tpl_start_tag
       (tpl_tag_name)
       (tpl_tag_attributes))
-    (tpl_section
+    (tpl_slot
       (tpl_start_tag
         (tpl_tag_name)
         (tpl_tag_attributes))

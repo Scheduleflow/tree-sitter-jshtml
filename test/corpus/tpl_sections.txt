@@ -1,14 +1,14 @@
 ==================
-an empty section
+an empty slot
 ==================
 
-{% section name %}
-{% endsection %}
+{% slot name %}
+{% endslot %}
 
 ---
 
 (fragment
-  (tpl_section
+  (tpl_slot
     (tpl_start_tag
       (tpl_tag_name)
       (tpl_tag_attributes))
@@ -17,17 +17,17 @@ an empty section
 
 
 ==================
-a section with nested text
+a slot with nested text
 ==================
 
-{% section name %}
+{% slot name %}
   Hello
-{% endsection %}
+{% endslot %}
 
 ---
 
 (fragment
-  (tpl_section
+  (tpl_slot
     (tpl_start_tag
       (tpl_tag_name)
       (tpl_tag_attributes))
@@ -37,17 +37,17 @@ a section with nested text
 
 
 ==================
-a section with nested elements
+a slot with nested elements
 ==================
 
-{% section name %}
+{% slot name %}
   <div>Hello</div>
-{% endsection %}
+{% endslot %}
 
 ---
 
 (fragment
-  (tpl_section
+  (tpl_slot
     (tpl_start_tag
       (tpl_tag_name)
       (tpl_tag_attributes))
@@ -62,10 +62,10 @@ a section with nested elements
 
 
 ==================
-a section inside the element's attribute aria
+a slot inside the element's attribute aria
 ==================
 
-<html {% section html_attrs %}lang="en"{% endsection %}></html>
+<html {% slot html_attrs %}lang="en"{% endslot %}></html>
 
 ---
 
@@ -73,7 +73,7 @@ a section inside the element's attribute aria
   (element
     (start_tag
       (tag_name)
-      (tpl_section
+      (tpl_slot
         (tpl_start_tag
           (tpl_tag_name)
           (tpl_tag_attributes))
@@ -88,10 +88,10 @@ a section inside the element's attribute aria
       (tag_name))))
 
 ==================
-a section inside an attribute value wrapped in double quotes
+a slot inside an attribute value wrapped in double quotes
 ==================
 
-<html class="{% section body_class %}foo'{% endsection %}"></html>
+<html class="{% slot body_class %}foo'{% endslot %}"></html>
 
 ---
 
@@ -103,7 +103,7 @@ a section inside an attribute value wrapped in double quotes
         (attribute_name)
         (quoted_attribute_value
           (attribute_value
-            (tpl_section
+            (tpl_slot
               (tpl_start_tag
                 (tpl_tag_name)
                 (tpl_tag_attributes))
@@ -114,10 +114,10 @@ a section inside an attribute value wrapped in double quotes
       (tag_name))))
 
 ==================
-a section inside an attribute value wrapped in single quotes
+a slot inside an attribute value wrapped in single quotes
 ==================
 
-<html class='{% section body_class %}foo"{% endsection %}'></html>
+<html class='{% slot body_class %}foo"{% endslot %}'></html>
 
 ---
 
@@ -129,7 +129,7 @@ a section inside an attribute value wrapped in single quotes
         (attribute_name)
         (quoted_attribute_value
           (attribute_value
-            (tpl_section
+            (tpl_slot
               (tpl_start_tag
                 (tpl_tag_name)
                 (tpl_tag_attributes))
