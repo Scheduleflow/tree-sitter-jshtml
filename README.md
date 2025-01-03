@@ -12,6 +12,13 @@ cd ~
 git clone git@github.com:Scheduleflow/tree-sitter-jshtml.git
 ```
 
+Install dependencies and build the parser:
+```
+cd ~/tree-sitter-jshtml
+npm ci
+npm run build
+```
+
 Install scm queries:
 ```
 mkdir -p ~/.config/nvim/after/queries
